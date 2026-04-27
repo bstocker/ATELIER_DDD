@@ -11,7 +11,7 @@ analyser_demande_initiale:
     - les objectifs opérationnels ;
     - les enjeux de sécurité, délai, traçabilité et interprétation ;
     - les points encore ambigus à clarifier.
-  output_file: modules/antixa/outputs/01_reformulation_du_besoin.md
+  output_file: outputs/01_reformulation_du_besoin.md
 
 identifier_acteurs_domaine:
   description: >
@@ -25,7 +25,7 @@ identifier_acteurs_domaine:
     - leurs responsabilités ;
     - leurs interactions principales ;
     - les zones de dépendance entre acteurs.
-  output_file: modules/antixa/outputs/02_acteurs_du_domaine.md
+  output_file: outputs/02_acteurs_du_domaine.md
 
 identifier_concepts_metier:
   description: >
@@ -38,7 +38,7 @@ identifier_concepts_metier:
     - une définition courte pour chaque concept ;
     - les informations associées à chaque concept ;
     - les termes qui nécessitent validation auprès des experts métier.
-  output_file: modules/antixa/outputs/03_concepts_metier_initiaux.md
+  output_file: outputs/03_concepts_metier_initiaux.md
 
 identifier_contraintes_risques:
   description: >
@@ -53,7 +53,7 @@ identifier_contraintes_risques:
     - les contraintes de traçabilité ;
     - les risques métier associés ;
     - les conséquences possibles pour la prise en charge patient.
-  output_file: modules/antixa/outputs/04_contraintes_et_risques.md
+  output_file: outputs/04_contraintes_et_risques.md
 
 produire_vision_globale:
   description: >
@@ -68,4 +68,4 @@ produire_vision_globale:
     - les irritants métier ;
     - les objectifs du futur circuit informatisé ;
     - les informations à collecter avant de passer à l’étape 2.
-  output_file: modules/antixa/outputs/05_vision_globale_du_domaine.md
+  output_file: outputs/05_vision_globale_du_domaine.md
