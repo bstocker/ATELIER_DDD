@@ -9,8 +9,8 @@ from crewai import Agent, Task, Crew, Process, LLM
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CONFIG_DIR = BASE_DIR / "config"
-INPUT_FILE = BASE_DIR / "modules" / "antixa" / "data" / "input" / "demande_biologiste.md"
-OUTPUT_DIR = BASE_DIR / "modules" / "antixa" / "outputs"
+INPUT_FILE = BASE_DIR / "data" / "input" / "demande_biologiste.md"
+OUTPUT_DIR = BASE_DIR / "outputs"
 
 
 def load_yaml(path: Path) -> Dict[str, Any]:
