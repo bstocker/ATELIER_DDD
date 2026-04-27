@@ -11,9 +11,13 @@ Le cas étudié concerne l'évolution d'un SIL pour améliorer la gestion des de
 
 Produire une connaissance globale du domaine, sans encore concevoir le modèle DDD détaillé, les bounded contexts, les agrégats ou l'architecture technique.
 
+## Les inputs
+
+Les inputs (demandes utilisateurs) sont à déposer dans le répertoire data/input. Dans cet exemple, vous trouverez dans le répertoire inputs la demande d'évolution d'un SI émise par un biologiste.    
+  
 ## Livrables produits
 
-Le runner génère les fichiers suivants dans le dossier `outputs/` :
+Le runner des Agents AI génère les fichiers suivants dans le dossier `outputs/` :
 
 ```text
 01_reformulation_du_besoin.md
