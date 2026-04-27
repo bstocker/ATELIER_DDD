@@ -1,5 +1,4 @@
-# ATELIER DDD  
-Processus général de la démarche DDD  
+# ATELIER DDD - Processus général de la démarche DDD  
 <img width="1024" height="1536" alt="Processus_DDD" src="https://github.com/user-attachments/assets/e24f9027-e444-457a-98d5-9742973f1da3" />
 
 # Étape 1 : Comprendre le domaine métier
