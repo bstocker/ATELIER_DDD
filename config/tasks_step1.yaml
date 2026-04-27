@@ -1,0 +1,71 @@
+analyser_demande_initiale:
+  description: >
+    Lire la demande métier fournie par le biologiste dans le fichier d'entrée.
+    Produire une reformulation structurée du besoin sans proposer de solution technique.
+    Identifier le problème principal, le contexte hospitalier, les objectifs exprimés
+    et les enjeux implicites.
+  expected_output: >
+    Un document Markdown intitulé "Reformulation du besoin" contenant :
+    - une reformulation claire du besoin ;
+    - le problème métier principal ;
+    - les objectifs opérationnels ;
+    - les enjeux de sécurité, délai, traçabilité et interprétation ;
+    - les points encore ambigus à clarifier.
+  output_file: modules/antixa/outputs/01_reformulation_du_besoin.md
+
+identifier_acteurs_domaine:
+  description: >
+    À partir de la demande métier fournie et de la reformulation du besoin,
+    identifier les acteurs humains, organisationnels et techniques mentionnés
+    ou implicitement concernés par le circuit des demandes urgentes de dosage anti-Xa.
+  expected_output: >
+    Un document Markdown intitulé "Acteurs du domaine" contenant :
+    - la liste des acteurs ;
+    - leur rôle probable dans le processus ;
+    - leurs responsabilités ;
+    - leurs interactions principales ;
+    - les zones de dépendance entre acteurs.
+  output_file: modules/antixa/outputs/02_acteurs_du_domaine.md
+
+identifier_concepts_metier:
+  description: >
+    Extraire les principaux concepts métier présents dans la demande,
+    sans encore les transformer en entités, agrégats ou value objects DDD.
+    Constituer une première base de vocabulaire métier utile pour la suite du projet.
+  expected_output: >
+    Un document Markdown intitulé "Concepts métier initiaux" contenant :
+    - les concepts métier identifiés ;
+    - une définition courte pour chaque concept ;
+    - les informations associées à chaque concept ;
+    - les termes qui nécessitent validation auprès des experts métier.
+  output_file: modules/antixa/outputs/03_concepts_metier_initiaux.md
+
+identifier_contraintes_risques:
+  description: >
+    Identifier les contraintes critiques du domaine ainsi que les risques associés
+    à une mauvaise gestion du circuit de demande urgente de dosage anti-Xa.
+    Ne pas proposer encore de conception logicielle détaillée.
+  expected_output: >
+    Un document Markdown intitulé "Contraintes et risques" contenant :
+    - les contraintes temporelles ;
+    - les contraintes de qualité pré-analytique ;
+    - les contraintes d'information clinique ;
+    - les contraintes de traçabilité ;
+    - les risques métier associés ;
+    - les conséquences possibles pour la prise en charge patient.
+  output_file: modules/antixa/outputs/04_contraintes_et_risques.md
+
+produire_vision_globale:
+  description: >
+    Synthétiser l’ensemble des informations issues des tâches précédentes afin de
+    produire une vision globale du domaine métier. Cette vision doit servir de base
+    aux étapes suivantes de la démarche DDD, sans passer encore à la modélisation détaillée.
+  expected_output: >
+    Un document Markdown intitulé "Vision globale du domaine" contenant :
+    - une synthèse du domaine ;
+    - les acteurs principaux ;
+    - le parcours métier actuel supposé ;
+    - les irritants métier ;
+    - les objectifs du futur circuit informatisé ;
+    - les informations à collecter avant de passer à l’étape 2.
+  output_file: modules/antixa/outputs/05_vision_globale_du_domaine.md
