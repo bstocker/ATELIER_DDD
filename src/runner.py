@@ -7,19 +7,15 @@ from dotenv import load_dotenv
 from crewai import Agent, Task, Crew, Process, LLM
 
 
-# Racine du projet : /workspaces/ATELIER_DDD
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 CONFIG_DIR = BASE_DIR / "config"
 DATA_DIR = BASE_DIR / "data"
-INPUT_FILE = DATA_DIR / "input" / "demande_biologiste.md"
-
-# Dossier de sortie relatif au projet
+INPUT_DIR = DATA_DIR / "input"
 OUTPUT_DIR = BASE_DIR / "outputs"
 
 
 def load_yaml(path: Path) -> Dict[str, Any]:
-    """Charge un fichier YAML et vérifie qu'il contient un dictionnaire."""
     if not path.exists():
         raise FileNotFoundError(f"Fichier YAML introuvable : {path}")
 
@@ -32,26 +28,59 @@ def load_yaml(path: Path) -> Dict[str, Any]:
     return content
 
 
-def load_input_text(path: Path) -> str:
-    """Charge le fichier de demande métier."""
-    if not path.exists():
-        raise FileNotFoundError(f"Fichier d'entrée introuvable : {path}")
+def load_inputs_from_directory(input_dir: Path) -> str:
+    """
+    Lit tous les fichiers texte exploitables du dossier data/input/
+    et les concatène dans un corpus unique.
+    """
+    if not input_dir.exists():
+        raise FileNotFoundError(f"Dossier d'entrée introuvable : {input_dir}")
 
-    content = path.read_text(encoding="utf-8").strip()
+    allowed_extensions = {".md", ".txt", ".log", ".csv"}
 
-    if not content:
-        raise ValueError(f"Le fichier d'entrée est vide : {path}")
+    files = sorted(
+        file
+        for file in input_dir.iterdir()
+        if file.is_file() and file.suffix.lower() in allowed_extensions
+    )
 
-    return content
+    if not files:
+        raise ValueError(
+            f"Aucun fichier exploitable trouvé dans {input_dir}. "
+            f"Extensions acceptées : {', '.join(sorted(allowed_extensions))}"
+        )
+
+    blocks: List[str] = []
+
+    for file in files:
+        content = file.read_text(encoding="utf-8").strip()
+
+        if not content:
+            continue
+
+        blocks.append(
+            f"""
+==============================
+SOURCE : {file.name}
+CHEMIN : {file.relative_to(BASE_DIR)}
+==============================
+
+{content}
+""".strip()
+        )
+
+    if not blocks:
+        raise ValueError(f"Les fichiers trouvés dans {input_dir} sont vides.")
+
+    return "\n\n".join(blocks)
 
 
 def build_task_description(base_description: str, input_text: str) -> str:
-    """Construit la consigne complète transmise à l'agent."""
     return f"""
 {base_description}
 
 ---
-DEMANDE MÉTIER À ANALYSER
+CORPUS MÉTIER À ANALYSER
 ---
 {input_text}
 
@@ -61,19 +90,20 @@ CONSIGNES GÉNÉRALES
 - Rester strictement dans l'étape 1 : compréhension du domaine métier.
 - Ne pas produire de modèle DDD détaillé.
 - Ne pas produire de schéma d'architecture technique.
-- Ne pas inventer d'information clinique absente de la demande.
-- Signaler explicitement les hypothèses et les points à clarifier.
+- Ne pas inventer d'information clinique absente du corpus.
+- Distinguer explicitement les faits, les hypothèses et les points à clarifier.
+- Identifier les éventuelles contradictions entre les sources.
+- Citer les sources utilisées quand c'est utile.
 - Produire une réponse en français, structurée en Markdown.
 """.strip()
 
 
 def ensure_project_structure() -> None:
-    """Crée les répertoires nécessaires s'ils n'existent pas."""
+    INPUT_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def build_agent(agents_config: Dict[str, Any], llm: LLM) -> Agent:
-    """Construit l'agent principal d'analyse du domaine."""
     agent_key = "domain_understanding_analyst"
 
     if agent_key not in agents_config:
@@ -101,7 +131,6 @@ def build_tasks(
     domain_agent: Agent,
     input_text: str,
 ) -> List[Task]:
-    """Construit les tâches CrewAI avec des chemins de sortie relatifs."""
     tasks: List[Task] = []
 
     for task_key, task_config in tasks_config.items():
@@ -112,20 +141,17 @@ def build_tasks(
                 raise KeyError(f"Champ manquant dans la tâche {task_key} : {field}")
 
         output_file = task_config["output_file"]
-
-        # Sécurité : on force les sorties dans outputs/
         output_path = Path(output_file)
 
         if output_path.is_absolute():
             raise ValueError(
                 f"La tâche {task_key} utilise un chemin absolu interdit : {output_file}. "
-                "Utilise plutôt un chemin relatif du type outputs/nom_du_fichier.md"
+                "Utilise un chemin relatif du type outputs/nom_du_fichier.md"
             )
 
         if output_path.parts[0] != "outputs":
             output_path = Path("outputs") / output_path
 
-        # Création du dossier parent depuis la racine projet
         absolute_output_parent = BASE_DIR / output_path.parent
         absolute_output_parent.mkdir(parents=True, exist_ok=True)
 
@@ -136,10 +162,6 @@ def build_tasks(
             ),
             expected_output=task_config["expected_output"],
             agent=domain_agent,
-
-            # Important :
-            # On transmet un chemin relatif à CrewAI pour éviter
-            # l'affichage parasite /workspaces/ATELIER_DDD/outputs dans VSCode.
             output_file=str(output_path),
         )
 
@@ -152,7 +174,6 @@ def build_tasks(
 
 
 def main() -> None:
-    """Point d'entrée principal."""
     os.chdir(BASE_DIR)
 
     load_dotenv(BASE_DIR / ".env")
@@ -169,7 +190,8 @@ def main() -> None:
 
     agents_config = load_yaml(CONFIG_DIR / "agents_step1.yaml")
     tasks_config = load_yaml(CONFIG_DIR / "tasks_step1.yaml")
-    input_text = load_input_text(INPUT_FILE)
+
+    input_text = load_inputs_from_directory(INPUT_DIR)
 
     llm = LLM(model=model_name)
 
@@ -186,16 +208,14 @@ def main() -> None:
     result = crew.kickoff()
 
     print("\nExécution terminée.")
+    print(f"Sources analysées depuis : {INPUT_DIR.relative_to(BASE_DIR)}")
     print(f"Livrables générés dans : {OUTPUT_DIR.relative_to(BASE_DIR)}")
-    print("\nFichiers attendus :")
 
+    print("\nFichiers de sortie attendus :")
     for task_config in tasks_config.values():
         output_file = Path(task_config["output_file"])
 
-        if output_file.is_absolute():
-            continue
-
-        if output_file.parts[0] != "outputs":
+        if not output_file.is_absolute() and output_file.parts[0] != "outputs":
             output_file = Path("outputs") / output_file
 
         print(f"- {output_file}")
