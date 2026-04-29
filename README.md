@@ -3,7 +3,7 @@
 
 # Étape 1 : Comprendre le domaine métier
 
-Ce projet est un prototype de programmation d'Agents IA destiné à produire les livrables de l'étape 1 d'une démarche DDD : **comprendre le domaine métier**.
+Ce  projet est un prototype de programmation d'Agents IA destiné à produire les livrables de l'étape 1 d'une démarche DDD : **comprendre le domaine métier**.
 
 Le cas étudié concerne l'évolution d'un SIL pour améliorer la gestion des demandes urgentes de dosage anti-Xa chez les patients sous anticoagulants oraux directs.
 
