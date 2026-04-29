@@ -22,6 +22,7 @@ STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
 STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
 STEP1_LIVRABLES_DIR = LIVRABLES_DIR / "etape1"
+STEP2_LIVRABLES_DIR = LIVRABLES_DIR / "etape2"
 STEP4_LIVRABLES_DIR = LIVRABLES_DIR / "etape4"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
@@ -58,6 +59,12 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
         "tasks_file": CONFIG_DIR / "tasks_step2.yaml",
         "input_dir": STEP1_OUTPUT_DIR,
         "output_dir": STEP2_OUTPUT_DIR,
+        "post_run_copies": [
+            {
+                "source": STEP2_OUTPUT_DIR / "07_base_modelisation_comportementale.md",
+                "destination": STEP2_LIVRABLES_DIR / "Référentiel_Metier_etape2.md",
+            }
+        ],
         "instructions": [
             "Rester strictement dans l'étape 2 : structuration des acteurs, responsabilités, décisions, informations et règles métier.",
             "Utiliser les livrables de l'étape 1 comme corpus d'entrée principal.",
@@ -228,6 +235,7 @@ def ensure_project_structure() -> None:
     STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP1_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
+    STEP2_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
 
 

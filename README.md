@@ -59,7 +59,8 @@ python src/runner.py --step 1
 ```
 
 L'étape 2 utilise les livrables de `outputs/etape1/` comme inputs et dépose ses
-livrables dans `outputs/etape2/` :
+livrables dans `outputs/etape2/`. Le référentiel métier final est aussi copié
+dans `livrables/etape2/Référentiel_Metier_etape2.md` :
 
 ```bash
 python src/runner.py --step 2
