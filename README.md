@@ -37,7 +37,7 @@ Le livrable principal est :
 ## 1) Lancer le projet dans Codespaces
 - Faite un Fork de ce Repository Github (bouton Fork en haut à gauche)
 - Créez, dans votre Repository, le Secret Codespaces suivant :
-  **OPENAI_API_KEY** qui contiendra l'API Key de votre ChatGPT   
+  **MISTRAL_API_KEY** qui contiendra votre clé API Mistral AI
 - Cliquez ensuite sur le bouton **[Code]** → **Create codespace on main**
 - Dernière étape, dans le Terminal de votre Codespace, exécutez les commandes suivantes :  
 ```bash

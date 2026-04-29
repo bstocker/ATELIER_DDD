@@ -260,13 +260,13 @@ def main() -> None:
 
     load_dotenv(BASE_DIR / ".env")
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("MISTRAL_API_KEY")
     if not api_key:
         raise EnvironmentError(
-            "OPENAI_API_KEY est absent. Crée un fichier .env à la racine du projet."
+            "MISTRAL_API_KEY est absent. Crée un fichier .env à la racine du projet."
         )
 
-    model_name = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    model_name = os.getenv("MISTRAL_MODEL", "mistral/mistral-small-latest")
 
     ensure_project_structure()
 
