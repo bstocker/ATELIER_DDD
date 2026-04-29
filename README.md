@@ -69,7 +69,8 @@ python src/runner.py --step 3
 
 L'étape 4 utilise les livrables de `outputs/etape1/` et `outputs/etape2/` comme
 inputs afin de découper le domaine global en sous-domaines cohérents. Les
-livrables sont déposés dans `outputs/etape4/` :
+livrables sont déposés dans `outputs/etape4/`. La cartographie Mermaid finale
+est aussi copiée dans `livrables/etape4/Cartographie_etape4.md` :
 
 ```bash
 python src/runner.py --step 4

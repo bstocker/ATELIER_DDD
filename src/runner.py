@@ -1,5 +1,6 @@
 import argparse
 import os
+import shutil
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -15,10 +16,12 @@ CONFIG_DIR = BASE_DIR / "config"
 DATA_DIR = BASE_DIR / "data"
 INPUT_DIR = DATA_DIR / "input"
 OUTPUT_DIR = BASE_DIR / "outputs"
+LIVRABLES_DIR = BASE_DIR / "livrables"
 STEP1_OUTPUT_DIR = OUTPUT_DIR / "etape1"
 STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
 STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
+STEP4_LIVRABLES_DIR = LIVRABLES_DIR / "etape4"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
 
@@ -85,6 +88,12 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
         "tasks_file": CONFIG_DIR / "tasks_step4.yaml",
         "input_dirs": [STEP1_OUTPUT_DIR, STEP2_OUTPUT_DIR],
         "output_dir": STEP4_OUTPUT_DIR,
+        "post_run_copies": [
+            {
+                "source": STEP4_OUTPUT_DIR / "06_synthese_decoupage_sous_domaines.md",
+                "destination": STEP4_LIVRABLES_DIR / "Cartographie_etape4.md",
+            }
+        ],
         "instructions": [
             "Rester strictement dans l'étape 4 : découpage du domaine global en sous-domaines cohérents.",
             "Utiliser les livrables des étapes 1 et 2 comme corpus d'entrée principal.",
@@ -211,6 +220,26 @@ def ensure_project_structure() -> None:
     STEP2_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP4_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def run_post_run_copies(step_config: Dict[str, Any]) -> List[Path]:
+    copied_files: List[Path] = []
+
+    for copy_config in step_config.get("post_run_copies", []):
+        source = copy_config["source"]
+        destination = copy_config["destination"]
+
+        if not source.exists():
+            raise FileNotFoundError(
+                f"Impossible de copier le livrable : fichier source introuvable : {source}"
+            )
+
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+        copied_files.append(destination)
+
+    return copied_files
 
 
 def resolve_step_output_path(output_file: str, task_key: str, output_dir: Path) -> Path:
@@ -363,6 +392,7 @@ def main() -> None:
     )
 
     result = crew.kickoff()
+    copied_files = run_post_run_copies(step_config)
 
     print("\nExécution terminée.")
     print(f"Étape exécutée : {step_config['label']}")
@@ -385,6 +415,11 @@ def main() -> None:
             step_config["output_dir"],
         )
         print(f"- {output_file}")
+
+    if copied_files:
+        print("\nCopies de livrables générées :")
+        for copied_file in copied_files:
+            print(f"- {copied_file.relative_to(BASE_DIR)}")
 
     print("\nRésultat global :")
     print(result)

@@ -80,17 +80,12 @@ identifier_priorites_conception:
 
 produire_synthese_decoupage_sous_domaines:
   description: >
-    Synthétiser les livrables de l'étape 4 afin de produire une vision consolidée
-    du découpage du domaine global en sous-domaines cohérents. La synthèse doit
-    servir de base aux prochaines étapes DDD, sans définir encore les bounded
-    contexts définitifs, les agrégats ou l'architecture technique.
+    Produire uniquement un flowchart de synthèse en Mermaid représentant le
+    découpage du domaine global en sous-domaines cohérents. Le schéma doit montrer
+    les sous-domaines, leur classification coeur stratégique/support/générique et
+    leurs interactions métier principales. Ne produire aucun texte explicatif,
+    aucun titre, aucun tableau et aucune synthèse rédigée.
   expected_output: >
-    Un document Markdown intitulé "Synthèse du découpage en sous-domaines" contenant :
-    - la carte synthétique des sous-domaines proposés ;
-    - la classification coeur stratégique, support et générique ;
-    - les finalités et responsabilités de chaque sous-domaine ;
-    - les interactions majeures ;
-    - les priorités de conception ;
-    - les hypothèses et points à clarifier ;
-    - les éléments prêts pour la suite de la démarche DDD.
+    Un fichier Markdown contenant uniquement un bloc ```mermaid avec un flowchart
+    de synthèse. Le fichier ne doit contenir rien d'autre avant ou après ce bloc.
   output_file: outputs/etape4/06_synthese_decoupage_sous_domaines.md
