@@ -33,6 +33,12 @@ Le livrable principal est :
 05_vision_globale_du_domaine.md
 ```
 
+Il est aussi copié dans :
+
+```text
+livrables/etape1/Vision_Globale_etape1.md
+```
+
 ## Installation
 ## 1) Lancer le projet dans Codespaces
 - Faite un Fork de ce Repository Github (bouton Fork en haut à gauche)

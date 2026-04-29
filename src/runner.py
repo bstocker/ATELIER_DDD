@@ -21,6 +21,7 @@ STEP1_OUTPUT_DIR = OUTPUT_DIR / "etape1"
 STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
 STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
+STEP1_LIVRABLES_DIR = LIVRABLES_DIR / "etape1"
 STEP4_LIVRABLES_DIR = LIVRABLES_DIR / "etape4"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
@@ -33,6 +34,12 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
         "tasks_file": CONFIG_DIR / "tasks_step1.yaml",
         "input_dir": INPUT_DIR,
         "output_dir": STEP1_OUTPUT_DIR,
+        "post_run_copies": [
+            {
+                "source": STEP1_OUTPUT_DIR / "05_vision_globale_du_domaine.md",
+                "destination": STEP1_LIVRABLES_DIR / "Vision_Globale_etape1.md",
+            }
+        ],
         "instructions": [
             "Rester strictement dans l'étape 1 : compréhension du domaine métier.",
             "Ne pas produire de modèle DDD détaillé.",
@@ -220,6 +227,7 @@ def ensure_project_structure() -> None:
     STEP2_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP1_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
 
 
