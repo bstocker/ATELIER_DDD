@@ -59,6 +59,14 @@ livrables dans `outputs/etape2/` :
 python src/runner.py --step 2
 ```
 
+L'étape 3 doit être lancée après les étapes 1 et 2. Elle utilise les livrables
+de `outputs/etape1/` et `outputs/etape2/` comme inputs afin de produire un
+langage commun partagé. Les livrables sont déposés dans `outputs/etape3/` :
+
+```bash
+python src/runner.py --step 3
+```
+
 ## Remarque
 
 Ce projet traite les premières étapes de la méthode DDD. Il ne produit pas encore

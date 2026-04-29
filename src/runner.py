@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -16,6 +17,7 @@ INPUT_DIR = DATA_DIR / "input"
 OUTPUT_DIR = BASE_DIR / "outputs"
 STEP1_OUTPUT_DIR = OUTPUT_DIR / "etape1"
 STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
+STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
 
@@ -56,6 +58,25 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
             "Produire une réponse en français, structurée en Markdown.",
         ],
     },
+    "3": {
+        "label": "Étape 3",
+        "agent_key": "ubiquitous_language_analyst",
+        "agents_file": CONFIG_DIR / "agents_step3.yaml",
+        "tasks_file": CONFIG_DIR / "tasks_step3.yaml",
+        "input_dirs": [STEP1_OUTPUT_DIR, STEP2_OUTPUT_DIR],
+        "output_dir": STEP3_OUTPUT_DIR,
+        "instructions": [
+            "Rester strictement dans l'étape 3 : établissement d'un langage commun partagé.",
+            "Utiliser les livrables des étapes 1 et 2 comme corpus d'entrée principal.",
+            "Stabiliser le vocabulaire métier sans concevoir encore d'agrégats, de bounded contexts ou d'architecture technique.",
+            "Définir chaque concept avec un nom clair, unique et cohérent.",
+            "Repérer les synonymes, ambiguïtés, termes concurrents et divergences d'interprétation.",
+            "Distinguer explicitement les termes validés, les hypothèses terminologiques et les termes à clarifier.",
+            "Produire des formulations réutilisables dans les ateliers, la documentation, les user stories, les tests et le code.",
+            "Ne pas inventer d'information clinique absente du corpus.",
+            "Produire une réponse en français, structurée en Markdown.",
+        ],
+    },
 }
 
 
@@ -70,6 +91,16 @@ def load_yaml(path: Path) -> Dict[str, Any]:
         raise ValueError(f"Le fichier YAML est vide ou invalide : {path}")
 
     return content
+
+
+def build_missing_input_hint(input_dir: Path) -> str:
+    if input_dir == STEP1_OUTPUT_DIR:
+        return "Exécute d'abord l'étape 1 : python src/runner.py --step 1"
+
+    if input_dir == STEP2_OUTPUT_DIR:
+        return "Exécute d'abord l'étape 2 : python src/runner.py --step 2"
+
+    return f"Dépose au moins un fichier exploitable dans {input_dir.relative_to(BASE_DIR)}."
 
 
 def load_inputs_from_directory(input_dir: Path) -> str:
@@ -89,7 +120,8 @@ def load_inputs_from_directory(input_dir: Path) -> str:
     if not files:
         raise ValueError(
             f"Aucun fichier exploitable trouvé dans {input_dir}. "
-            f"Extensions acceptées : {', '.join(sorted(ALLOWED_INPUT_EXTENSIONS))}"
+            f"Extensions acceptées : {', '.join(sorted(ALLOWED_INPUT_EXTENSIONS))}. "
+            f"{build_missing_input_hint(input_dir)}"
         )
 
     blocks: List[str] = []
@@ -112,9 +144,21 @@ CHEMIN : {file.relative_to(BASE_DIR)}
         )
 
     if not blocks:
-        raise ValueError(f"Les fichiers trouvés dans {input_dir} sont vides.")
+        raise ValueError(
+            f"Les fichiers trouvés dans {input_dir} sont vides. "
+            f"{build_missing_input_hint(input_dir)}"
+        )
 
     return "\n\n".join(blocks)
+
+
+def load_inputs_from_directories(input_dirs: List[Path]) -> str:
+    corpus_blocks: List[str] = []
+
+    for input_dir in input_dirs:
+        corpus_blocks.append(load_inputs_from_directory(input_dir))
+
+    return "\n\n".join(corpus_blocks)
 
 
 def build_task_description(
@@ -145,6 +189,7 @@ def ensure_project_structure() -> None:
     INPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP1_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP2_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def resolve_step_output_path(output_file: str, task_key: str, output_dir: Path) -> Path:
@@ -273,7 +318,10 @@ def main() -> None:
     agents_config = load_yaml(step_config["agents_file"])
     tasks_config = load_yaml(step_config["tasks_file"])
 
-    input_text = load_inputs_from_directory(step_config["input_dir"])
+    if "input_dirs" in step_config:
+        input_text = load_inputs_from_directories(step_config["input_dirs"])
+    else:
+        input_text = load_inputs_from_directory(step_config["input_dir"])
 
     llm = LLM(model=model_name)
 
@@ -297,7 +345,15 @@ def main() -> None:
 
     print("\nExécution terminée.")
     print(f"Étape exécutée : {step_config['label']}")
-    print(f"Sources analysées depuis : {step_config['input_dir'].relative_to(BASE_DIR)}")
+    if "input_dirs" in step_config:
+        analyzed_sources = ", ".join(
+            str(input_dir.relative_to(BASE_DIR))
+            for input_dir in step_config["input_dirs"]
+        )
+    else:
+        analyzed_sources = str(step_config["input_dir"].relative_to(BASE_DIR))
+
+    print(f"Sources analysées depuis : {analyzed_sources}")
     print(f"Livrables générés dans : {step_config['output_dir'].relative_to(BASE_DIR)}")
 
     print("\nFichiers de sortie attendus :")
@@ -314,4 +370,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (EnvironmentError, FileNotFoundError, KeyError, ValueError) as error:
+        print(f"\nErreur : {error}", file=sys.stderr)
+        sys.exit(1)

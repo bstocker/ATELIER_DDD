@@ -1,0 +1,77 @@
+extraire_vocabulaire_metier:
+  description: >
+    À partir des livrables des étapes 1 et 2, extraire les termes métier importants
+    utilisés dans le domaine des demandes urgentes de dosage anti-Xa. Identifier les
+    concepts centraux, les acteurs, les décisions, les informations manipulées, les
+    règles métier et les termes cliniques ou organisationnels structurants.
+  expected_output: >
+    Un document Markdown intitulé "Vocabulaire métier extrait" contenant :
+    - la liste des termes métier identifiés ;
+    - la source principale de chaque terme ;
+    - le type de terme : acteur, concept, information, décision, règle, événement ou contrainte ;
+    - une définition courte issue du corpus ;
+    - les termes qui semblent importants mais insuffisamment définis.
+  output_file: outputs/etape3/01_vocabulaire_metier_extrait.md
+
+identifier_ambiguities_synonymes:
+  description: >
+    Analyser le vocabulaire extrait afin de repérer les ambiguïtés, synonymes,
+    variantes de formulation, termes concurrents, termes trop techniques ou termes
+    qui peuvent être interprétés différemment selon les parties prenantes.
+  expected_output: >
+    Un document Markdown intitulé "Ambiguïtés et synonymes" contenant :
+    - les termes ambigus ;
+    - les synonymes ou formulations concurrentes ;
+    - les risques d'interprétation divergente ;
+    - les confusions possibles entre vocabulaire métier et vocabulaire technique ;
+    - les recommandations de clarification à soumettre aux experts métier.
+  output_file: outputs/etape3/02_ambiguities_synonymes.md
+
+proposer_glossaire_langage_commun:
+  description: >
+    Proposer un glossaire de langage commun à partir du vocabulaire extrait et des
+    ambiguïtés identifiées. Chaque concept important doit être nommé de manière
+    claire, unique et cohérente, avec une définition métier concise et exploitable.
+  expected_output: >
+    Un document Markdown intitulé "Glossaire du langage commun" contenant :
+    - le terme retenu pour chaque concept ;
+    - la définition métier claire et concise ;
+    - les termes à éviter ou à remplacer ;
+    - les synonymes acceptés uniquement si leur usage est justifié ;
+    - les exemples d'utilisation correcte dans le contexte métier ;
+    - les questions restantes à valider avec les experts métier.
+  output_file: outputs/etape3/03_glossaire_langage_commun.md
+
+formaliser_regles_nommage:
+  description: >
+    Définir les règles de nommage et d'usage du langage commun afin que les termes
+    retenus puissent être réutilisés de manière cohérente dans les ateliers, la
+    documentation, les user stories, les tests et le code. Les règles doivent rester
+    centrées sur le vocabulaire métier et éviter toute conception technique détaillée.
+  expected_output: >
+    Un document Markdown intitulé "Règles d'usage du langage commun" contenant :
+    - les conventions de nommage des concepts métier ;
+    - les règles pour utiliser les termes retenus dans les échanges projet ;
+    - les formulations recommandées pour les user stories ;
+    - les formulations recommandées pour les tests d'acceptation ;
+    - les termes interdits, déconseillés ou à clarifier ;
+    - les règles de maintien du glossaire pendant la suite du projet.
+  output_file: outputs/etape3/04_regles_usage_langage_commun.md
+
+produire_synthese_langage_commun:
+  description: >
+    Synthétiser les livrables de l'étape 3 afin de produire une base de langage
+    commun partagée et directement exploitable pour la suite de la démarche DDD.
+    Mettre en évidence les termes stabilisés, les zones d'incertitude et la façon
+    dont ce langage doit guider la documentation, les ateliers, les user stories,
+    les tests et le futur code.
+  expected_output: >
+    Un document Markdown intitulé "Synthèse du langage commun" contenant :
+    - les objectifs du langage commun ;
+    - les termes métier stabilisés les plus importants ;
+    - les concepts nécessitant encore validation ;
+    - les ambiguïtés critiques à résoudre ;
+    - les recommandations d'utilisation dans les ateliers et la documentation ;
+    - les recommandations d'utilisation dans les user stories, tests et code ;
+    - les éléments prêts pour l'étape suivante de la démarche DDD.
+  output_file: outputs/etape3/05_synthese_langage_commun.md
