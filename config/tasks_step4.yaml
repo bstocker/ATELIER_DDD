@@ -1,0 +1,96 @@
+identifier_zones_fonctionnelles:
+  description: >
+    À partir des livrables des étapes 1 et 2, identifier les grandes zones
+    fonctionnelles du domaine des demandes urgentes de dosage anti-Xa. Chaque zone
+    doit regrouper un ensemble homogène de problématiques métier, de décisions,
+    d'informations manipulées et de responsabilités.
+  expected_output: >
+    Un document Markdown intitulé "Zones fonctionnelles du domaine" contenant :
+    - la liste des zones fonctionnelles identifiées ;
+    - la finalité métier de chaque zone ;
+    - les acteurs principalement concernés ;
+    - les décisions et informations structurantes ;
+    - les règles métier spécifiques ou probables ;
+    - les indices du corpus qui justifient chaque zone ;
+    - les zones encore ambiguës ou à clarifier.
+  output_file: outputs/etape4/01_zones_fonctionnelles_domaine.md
+
+proposer_sous_domaines_coherents:
+  description: >
+    Transformer les zones fonctionnelles identifiées en proposition de sous-domaines
+    métier cohérents. Chaque sous-domaine doit représenter un périmètre de
+    problématiques homogènes avec une responsabilité claire dans le domaine global.
+  expected_output: >
+    Un document Markdown intitulé "Proposition de sous-domaines" contenant :
+    - la liste des sous-domaines proposés ;
+    - la responsabilité métier principale de chaque sous-domaine ;
+    - les problèmes métier traités par chaque sous-domaine ;
+    - les règles, décisions et informations qui lui appartiennent ;
+    - ce qui semble explicitement hors périmètre ;
+    - les hypothèses de découpage à valider.
+  output_file: outputs/etape4/02_proposition_sous_domaines.md
+
+classifier_sous_domaines:
+  description: >
+    Classifier les sous-domaines proposés selon leur contribution à la valeur
+    métier : coeur stratégique, sous-domaine de support ou sous-domaine générique.
+    Justifier la classification à partir des enjeux, risques, différenciation,
+    criticité et spécificité métier identifiés dans les étapes 1 et 2.
+  expected_output: >
+    Un document Markdown intitulé "Classification des sous-domaines" contenant :
+    - un tableau des sous-domaines ;
+    - leur classification : coeur stratégique, support ou générique ;
+    - la justification métier de la classification ;
+    - le niveau de criticité et de différenciation métier ;
+    - les risques associés à une mauvaise modélisation ;
+    - les incertitudes ou arbitrages à confirmer.
+  output_file: outputs/etape4/03_classification_sous_domaines.md
+
+cartographier_interactions_sous_domaines:
+  description: >
+    Décrire les interactions entre les sous-domaines proposés : flux
+    d'informations, dépendances de décisions, règles partagées, responsabilités
+    communes, points de synchronisation et risques de couplage. Cette cartographie
+    reste métier et ne doit pas encore imposer d'architecture technique.
+  expected_output: >
+    Un document Markdown intitulé "Interactions entre sous-domaines" contenant :
+    - les interactions principales entre sous-domaines ;
+    - les informations échangées ou partagées ;
+    - les décisions dépendantes d'un autre sous-domaine ;
+    - les règles métier transverses ;
+    - les risques de couplage ou de responsabilité ambiguë ;
+    - les interactions à clarifier avec les experts métier.
+  output_file: outputs/etape4/04_interactions_sous_domaines.md
+
+identifier_priorites_conception:
+  description: >
+    Déduire du découpage en sous-domaines les priorités de conception et
+    d'approfondissement pour la suite de la démarche DDD. Mettre en évidence les
+    sous-domaines qui concentrent la valeur, les risques, les règles les plus
+    spécifiques ou les décisions les plus critiques.
+  expected_output: >
+    Un document Markdown intitulé "Priorités de conception par sous-domaine" contenant :
+    - les sous-domaines à approfondir en priorité ;
+    - les raisons métier de cette priorité ;
+    - les règles, décisions ou interactions à analyser plus finement ;
+    - les zones pouvant être traitées avec des solutions plus simples ou génériques ;
+    - les questions à poser avant de passer aux étapes suivantes ;
+    - les impacts possibles sur l'organisation des équipes.
+  output_file: outputs/etape4/05_priorites_conception_sous_domaines.md
+
+produire_synthese_decoupage_sous_domaines:
+  description: >
+    Synthétiser les livrables de l'étape 4 afin de produire une vision consolidée
+    du découpage du domaine global en sous-domaines cohérents. La synthèse doit
+    servir de base aux prochaines étapes DDD, sans définir encore les bounded
+    contexts définitifs, les agrégats ou l'architecture technique.
+  expected_output: >
+    Un document Markdown intitulé "Synthèse du découpage en sous-domaines" contenant :
+    - la carte synthétique des sous-domaines proposés ;
+    - la classification coeur stratégique, support et générique ;
+    - les finalités et responsabilités de chaque sous-domaine ;
+    - les interactions majeures ;
+    - les priorités de conception ;
+    - les hypothèses et points à clarifier ;
+    - les éléments prêts pour la suite de la démarche DDD.
+  output_file: outputs/etape4/06_synthese_decoupage_sous_domaines.md

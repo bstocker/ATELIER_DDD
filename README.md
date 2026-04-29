@@ -67,6 +67,14 @@ langage commun partagé. Les livrables sont déposés dans `outputs/etape3/` :
 python src/runner.py --step 3
 ```
 
+L'étape 4 utilise les livrables de `outputs/etape1/` et `outputs/etape2/` comme
+inputs afin de découper le domaine global en sous-domaines cohérents. Les
+livrables sont déposés dans `outputs/etape4/` :
+
+```bash
+python src/runner.py --step 4
+```
+
 ## Remarque
 
 Ce projet traite les premières étapes de la méthode DDD. Il ne produit pas encore

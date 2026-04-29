@@ -18,6 +18,7 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 STEP1_OUTPUT_DIR = OUTPUT_DIR / "etape1"
 STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
 STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
+STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
 
@@ -43,8 +44,8 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
     "2": {
         "label": "Étape 2",
         "agent_key": "actor_rules_analyst",
-        "agents_file": CONFIG_DIR / "agents_step2.yml",
-        "tasks_file": CONFIG_DIR / "tasks_step2.yml",
+        "agents_file": CONFIG_DIR / "agents_step2.yaml",
+        "tasks_file": CONFIG_DIR / "tasks_step2.yaml",
         "input_dir": STEP1_OUTPUT_DIR,
         "output_dir": STEP2_OUTPUT_DIR,
         "instructions": [
@@ -74,6 +75,25 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
             "Distinguer explicitement les termes validés, les hypothèses terminologiques et les termes à clarifier.",
             "Produire des formulations réutilisables dans les ateliers, la documentation, les user stories, les tests et le code.",
             "Ne pas inventer d'information clinique absente du corpus.",
+            "Produire une réponse en français, structurée en Markdown.",
+        ],
+    },
+    "4": {
+        "label": "Étape 4",
+        "agent_key": "subdomain_decomposition_analyst",
+        "agents_file": CONFIG_DIR / "agents_step4.yaml",
+        "tasks_file": CONFIG_DIR / "tasks_step4.yaml",
+        "input_dirs": [STEP1_OUTPUT_DIR, STEP2_OUTPUT_DIR],
+        "output_dir": STEP4_OUTPUT_DIR,
+        "instructions": [
+            "Rester strictement dans l'étape 4 : découpage du domaine global en sous-domaines cohérents.",
+            "Utiliser les livrables des étapes 1 et 2 comme corpus d'entrée principal.",
+            "Identifier les zones fonctionnelles, leurs finalités propres, leurs règles spécifiques et leurs interactions.",
+            "Distinguer explicitement les sous-domaines de coeur stratégique, de support et génériques.",
+            "Ne pas concevoir encore de bounded contexts définitifs, d'agrégats, de cas d'usage détaillés ou d'architecture technique.",
+            "Ne pas inventer d'information clinique absente du corpus.",
+            "Distinguer explicitement les faits, les hypothèses et les points à clarifier.",
+            "Signaler les découpages incertains ou alternatifs comme hypothèses à valider avec les experts métier.",
             "Produire une réponse en français, structurée en Markdown.",
         ],
     },
@@ -190,6 +210,7 @@ def ensure_project_structure() -> None:
     STEP1_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP2_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def resolve_step_output_path(output_file: str, task_key: str, output_dir: Path) -> Path:
