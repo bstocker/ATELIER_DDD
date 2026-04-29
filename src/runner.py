@@ -23,6 +23,7 @@ STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
 STEP1_LIVRABLES_DIR = LIVRABLES_DIR / "etape1"
 STEP2_LIVRABLES_DIR = LIVRABLES_DIR / "etape2"
+STEP3_LIVRABLES_DIR = LIVRABLES_DIR / "etape3"
 STEP4_LIVRABLES_DIR = LIVRABLES_DIR / "etape4"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
@@ -83,6 +84,12 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
         "tasks_file": CONFIG_DIR / "tasks_step3.yaml",
         "input_dirs": [STEP1_OUTPUT_DIR, STEP2_OUTPUT_DIR],
         "output_dir": STEP3_OUTPUT_DIR,
+        "post_run_copies": [
+            {
+                "source": STEP2_OUTPUT_DIR / "08_glossaire_metier.md",
+                "destination": STEP3_LIVRABLES_DIR / "08_glossaire_metier.md",
+            }
+        ],
         "instructions": [
             "Rester strictement dans l'étape 3 : établissement d'un langage commun partagé.",
             "Utiliser les livrables des étapes 1 et 2 comme corpus d'entrée principal.",
@@ -236,6 +243,7 @@ def ensure_project_structure() -> None:
     STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP1_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP2_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
+    STEP3_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -282,7 +290,7 @@ def resolve_step_output_path(output_file: str, task_key: str, output_dir: Path) 
                 f"La tâche {task_key} doit préciser un nom de fichier de sortie."
             )
 
-        return relative_output_dir / Path(*output_path.parts[1:])
+        return output_path
 
     return relative_output_dir / output_path
 

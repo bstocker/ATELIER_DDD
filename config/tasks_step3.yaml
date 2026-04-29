@@ -75,3 +75,17 @@ produire_synthese_langage_commun:
     - les recommandations d'utilisation dans les user stories, tests et code ;
     - les éléments prêts pour l'étape suivante de la démarche DDD.
   output_file: outputs/etape3/05_synthese_langage_commun.md
+
+produire_glossaire_metier_simple:
+  description: >
+    Produire un glossaire métier très simple à partir des livrables des étapes 1
+    et 2 et des travaux de langage commun de l'étape 3. Le glossaire doit être
+    court, lisible par des non-techniciens et centré sur les termes métier les
+    plus utiles pour la suite de la démarche DDD.
+  expected_output: >
+    Un document Markdown intitulé "Glossaire métier" contenant uniquement :
+    - un tableau simple avec les colonnes "Terme", "Définition simple" et "Catégorie" ;
+    - des définitions courtes, en une ou deux phrases maximum ;
+    - les termes métier principaux uniquement ;
+    - aucune section longue, aucun exemple détaillé, aucune règle de nommage.
+  output_file: outputs/etape2/08_glossaire_metier.md

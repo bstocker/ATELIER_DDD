@@ -68,7 +68,10 @@ python src/runner.py --step 2
 
 L'étape 3 doit être lancée après les étapes 1 et 2. Elle utilise les livrables
 de `outputs/etape1/` et `outputs/etape2/` comme inputs afin de produire un
-langage commun partagé. Les livrables sont déposés dans `outputs/etape3/` :
+langage commun partagé. Les livrables sont déposés dans `outputs/etape3/`.
+Elle produit aussi un glossaire métier simple dans
+`outputs/etape2/08_glossaire_metier.md`, copié ensuite dans
+`livrables/etape3/08_glossaire_metier.md` :
 
 ```bash
 python src/runner.py --step 3
