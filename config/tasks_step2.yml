@@ -1,0 +1,108 @@
+cartographier_acteurs_responsabilites:
+  description: >
+    À partir des livrables produits lors de l’étape 1, identifier précisément
+    les acteurs impliqués dans le domaine des demandes urgentes de dosage anti-Xa.
+    Décrire leur rôle, leurs responsabilités, leur périmètre d’action et leur place
+    dans le circuit métier.
+  expected_output: >
+    Un document Markdown intitulé "Cartographie des acteurs et responsabilités" contenant :
+    - la liste structurée des acteurs humains, organisationnels et systèmes ;
+    - le rôle métier de chaque acteur ;
+    - les responsabilités principales ;
+    - les responsabilités partagées ou ambiguës ;
+    - les interactions majeures entre acteurs ;
+    - les points à clarifier avec les experts métier.
+  output_file: outputs/etape2/01_cartographie_acteurs_responsabilites.md
+
+analyser_attentes_objectifs_acteurs:
+  description: >
+    Identifier les attentes, objectifs, motivations et contraintes propres à chaque
+    acteur du domaine. Mettre en évidence ce que chaque acteur cherche à obtenir,
+    éviter ou sécuriser dans le circuit des demandes urgentes de dosage anti-Xa.
+  expected_output: >
+    Un document Markdown intitulé "Attentes et objectifs des acteurs" contenant :
+    - les objectifs de chaque acteur ;
+    - les attentes explicites et implicites ;
+    - les irritants ou difficultés rencontrées ;
+    - les critères de réussite métier ;
+    - les éventuelles divergences d’intérêts entre acteurs.
+  output_file: outputs/etape2/02_attentes_objectifs_acteurs.md
+
+identifier_decisions_informations:
+  description: >
+    Décrire les décisions prises dans le domaine, les acteurs qui les prennent,
+    les informations nécessaires à ces décisions et les informations produites
+    ou transformées au cours du processus.
+  expected_output: >
+    Un document Markdown intitulé "Décisions et informations manipulées" contenant :
+    - les décisions métier identifiées ;
+    - l’acteur responsable de chaque décision ;
+    - les informations nécessaires à la décision ;
+    - les informations produites ou mises à jour ;
+    - les dépendances entre décisions ;
+    - les informations manquantes ou insuffisamment fiables.
+  output_file: outputs/etape2/03_decisions_informations_manipulees.md
+
+formaliser_regles_metier:
+  description: >
+    Formaliser les règles métier qui encadrent le fonctionnement du domaine :
+    conditions de validation, priorités, seuils, droits d’action, contraintes
+    réglementaires, enchaînements obligatoires et règles de traçabilité.
+    Distinguer les règles explicitement présentes dans les livrables de l’étape 1
+    des règles supposées ou à confirmer.
+  expected_output: >
+    Un document Markdown intitulé "Règles métier" contenant :
+    - les règles métier explicites ;
+    - les règles métier implicites ou probables ;
+    - les conditions d’application de chaque règle ;
+    - les acteurs concernés par chaque règle ;
+    - les conséquences en cas de non-respect ;
+    - les règles à valider avec les experts métier.
+  output_file: outputs/etape2/04_regles_metier.md
+
+identifier_priorites_exceptions_contraintes:
+  description: >
+    Identifier les priorités de traitement, les exceptions métier, les contraintes
+    critiques et les cas particuliers susceptibles d’influencer le comportement
+    futur de l’application.
+  expected_output: >
+    Un document Markdown intitulé "Priorités, exceptions et contraintes" contenant :
+    - les priorités métier identifiées ;
+    - les exceptions et cas particuliers ;
+    - les contraintes temporelles, cliniques, pré-analytiques et organisationnelles ;
+    - les contraintes réglementaires ou de traçabilité ;
+    - les risques associés à chaque exception ou contrainte ;
+    - les arbitrages à clarifier.
+  output_file: outputs/etape2/05_priorites_exceptions_contraintes.md
+
+clarifier_conflits_objectifs:
+  description: >
+    Analyser les éventuels conflits d’objectifs entre acteurs, les tensions
+    organisationnelles ou métier, et les arbitrages nécessaires pour garantir
+    un circuit sécurisé, priorisé et traçable.
+  expected_output: >
+    Un document Markdown intitulé "Conflits d’objectifs et arbitrages" contenant :
+    - les conflits ou tensions identifiés ;
+    - les acteurs concernés ;
+    - les causes probables de ces conflits ;
+    - les impacts métier possibles ;
+    - les arbitrages nécessaires ;
+    - les questions à poser aux experts métier.
+  output_file: outputs/etape2/06_conflits_objectifs_arbitrages.md
+
+produire_base_modelisation_comportementale:
+  description: >
+    Synthétiser les résultats de l’étape 2 afin de produire une base fiable pour
+    la modélisation comportementale future de l’application. Cette synthèse doit
+    rester métier et ne pas définir encore d’agrégats, de bounded contexts,
+    d’événements métier détaillés ou d’architecture technique.
+  expected_output: >
+    Un document Markdown intitulé "Base pour la modélisation comportementale" contenant :
+    - une synthèse des acteurs et responsabilités ;
+    - les décisions métier structurantes ;
+    - les informations clés manipulées ;
+    - les règles métier principales ;
+    - les exceptions et priorités critiques ;
+    - les conflits d’objectifs à résoudre ;
+    - les éléments prêts pour l’étape suivante de la démarche DDD.
+  output_file: outputs/etape2/07_base_modelisation_comportementale.md

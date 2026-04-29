@@ -49,9 +49,18 @@ pip install -r requirements.txt
 ## 2) Exécution
 
 ```bash
-python src/runner.py
+python src/runner.py --step 1
+```
+
+L'étape 2 utilise les livrables de `outputs/etape1/` comme inputs et dépose ses
+livrables dans `outputs/etape2/` :
+
+```bash
+python src/runner.py --step 2
 ```
 
 ## Remarque
 
-Ce projet traite uniquement l'étape 1 de la méthode DDD. Les étapes suivantes — règles métier, langage commun, sous-domaines, bounded contexts, agrégats, événements métier, cas d'usage et architecture — ne sont pas incluses volontairement.
+Ce projet traite les premières étapes de la méthode DDD. Il ne produit pas encore
+de modèle DDD détaillé, de bounded contexts, d'agrégats, d'événements métier
+détaillés, de cas d'usage applicatifs ou d'architecture technique.
