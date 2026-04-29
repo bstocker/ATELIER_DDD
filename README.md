@@ -86,8 +86,18 @@ est aussi copiée dans `livrables/etape4/Cartographie_etape4.md` :
 python src/runner.py --step 4
 ```
 
+L'étape 5 utilise les livrables de `outputs/etape1/`, `outputs/etape2/` et
+`outputs/etape4/` comme inputs afin de délimiter les Bounded Contexts. Les
+livrables sont déposés dans `outputs/etape5/`. La cartographie Mermaid des
+Bounded Contexts est aussi copiée dans
+`livrables/etape5/Cartographie_Bounded_Contexts_etape5.md` :
+
+```bash
+python src/runner.py --step 5
+```
+
 ## Remarque
 
 Ce projet traite les premières étapes de la méthode DDD. Il ne produit pas encore
-de modèle DDD détaillé, de bounded contexts, d'agrégats, d'événements métier
-détaillés, de cas d'usage applicatifs ou d'architecture technique.
+de modèle DDD détaillé, d'agrégats, d'événements métier détaillés, de cas
+d'usage applicatifs ou d'architecture technique.

@@ -1,0 +1,105 @@
+identifier_contextes_candidats:
+  description: >
+    À partir des livrables des étapes 1, 2 et 4, identifier les Bounded Contexts
+    candidats du domaine des demandes urgentes de dosage anti-Xa. Partir des
+    sous-domaines déjà proposés, mais ajuster les frontières lorsque le vocabulaire,
+    les règles ou les responsabilités indiquent des espaces de cohérence distincts.
+  expected_output: >
+    Un document Markdown intitulé "Bounded Contexts candidats" contenant :
+    - la liste des contextes candidats ;
+    - la responsabilité principale de chaque contexte ;
+    - les sous-domaines ou zones fonctionnelles qu'il couvre ;
+    - les acteurs principalement concernés ;
+    - les concepts métier centraux manipulés ;
+    - les hypothèses de découpage à valider.
+  output_file: outputs/etape5/01_contextes_candidats.md
+
+definir_frontieres_responsabilites:
+  description: >
+    Définir les frontières de responsabilité de chaque Bounded Context candidat.
+    Préciser ce qui appartient au contexte, ce qui est explicitement hors périmètre,
+    et les décisions métier dont le contexte est responsable.
+  expected_output: >
+    Un document Markdown intitulé "Frontières et responsabilités des Bounded Contexts" contenant :
+    - un tableau des contextes ;
+    - les responsabilités incluses ;
+    - les responsabilités exclues ;
+    - les décisions métier portées par chaque contexte ;
+    - les règles métier propres ;
+    - les zones de responsabilité ambiguë à clarifier.
+  output_file: outputs/etape5/02_frontieres_responsabilites_contextes.md
+
+clarifier_vocabulaire_modeles:
+  description: >
+    Pour chaque Bounded Context, identifier les termes métier qui y ont un sens
+    stable et repérer les concepts qui peuvent changer de signification selon le
+    contexte. Mettre en évidence les risques d'ambiguïté et les traductions de
+    vocabulaire nécessaires entre contextes.
+  expected_output: >
+    Un document Markdown intitulé "Vocabulaire et modèles par Bounded Context" contenant :
+    - les termes clés par contexte ;
+    - leur sens dans ce contexte ;
+    - les concepts partagés avec d'autres contextes ;
+    - les différences de signification éventuelles ;
+    - les termes à éviter ou à traduire entre contextes ;
+    - les points à valider avec les experts métier.
+  output_file: outputs/etape5/03_vocabulaire_modeles_par_contexte.md
+
+cartographier_dependances_contrats:
+  description: >
+    Décrire les dépendances métier entre les Bounded Contexts : informations
+    échangées, décisions dépendantes, événements ou statuts transmis, responsabilités
+    partagées et contrats d'échange à stabiliser. Rester au niveau métier, sans
+    imposer d'architecture technique.
+  expected_output: >
+    Un document Markdown intitulé "Dépendances et contrats entre Bounded Contexts" contenant :
+    - les dépendances principales entre contextes ;
+    - les informations ou statuts échangés ;
+    - les décisions dépendantes d'un autre contexte ;
+    - les contrats métier à formaliser ;
+    - les risques de couplage ;
+    - les interactions à clarifier.
+  output_file: outputs/etape5/04_dependances_contrats_contextes.md
+
+identifier_risques_arbitrages:
+  description: >
+    Identifier les risques liés à un mauvais découpage en Bounded Contexts :
+    duplication incohérente des règles, ambiguïtés de vocabulaire, dépendances trop
+    fortes, responsabilités floues ou contrats d'échange insuffisants. Proposer les
+    arbitrages à traiter avec les experts métier.
+  expected_output: >
+    Un document Markdown intitulé "Risques de découpage et arbitrages" contenant :
+    - les risques principaux ;
+    - les contextes concernés ;
+    - les impacts métier possibles ;
+    - les arbitrages à décider ;
+    - les questions à poser aux experts métier ;
+    - les recommandations de prudence avant les décisions d'architecture.
+  output_file: outputs/etape5/05_risques_arbitrages_contextes.md
+
+produire_cartographie_bounded_contexts:
+  description: >
+    Produire la cartographie principale des Bounded Contexts sous forme d'un
+    flowchart Mermaid. Le schéma doit représenter les contextes, leurs frontières
+    de responsabilité, leurs dépendances principales et les flux métier entre eux.
+    Ce livrable est le livrable le plus important de l'étape 5.
+  expected_output: >
+    Un fichier Markdown contenant uniquement un bloc ```mermaid avec un flowchart
+    de synthèse des Bounded Contexts. Le fichier ne doit contenir rien d'autre
+    avant ou après ce bloc.
+  output_file: outputs/etape5/06_cartographie_bounded_contexts.md
+
+produire_synthese_bounded_contexts:
+  description: >
+    Synthétiser les résultats de l'étape 5 afin de fournir une vue consolidée des
+    Bounded Contexts proposés, de leurs responsabilités, de leurs dépendances et
+    des décisions restantes à prendre avant les étapes de modélisation détaillée.
+  expected_output: >
+    Un document Markdown intitulé "Synthèse des Bounded Contexts" contenant :
+    - la liste consolidée des Bounded Contexts ;
+    - leur responsabilité principale ;
+    - les dépendances majeures ;
+    - les contrats métier à formaliser ;
+    - les risques et arbitrages ;
+    - les éléments prêts pour la suite de la démarche DDD.
+  output_file: outputs/etape5/07_synthese_bounded_contexts.md
