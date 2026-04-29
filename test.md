@@ -1,3 +1,4 @@
+```mermaid
 flowchart LR
     CL["SD-CL-01<br/>Prescription Clinique et Validation<br/><b>Coeur stratégique</b>"]
     PREA["SD-LB-02<br/>Gestion des Échantillons et Conformité Pré-analytique<br/>Support"]
@@ -26,4 +27,4 @@ flowchart LR
     INT -.->|"Échanges SIL / DPI / analyseurs"| CL
     INT -.->|"Échanges SIL / DPI / analyseurs"| PRIO
     INT -.->|"Échanges SIL / DPI / analyseurs"| ANA
-
+```
