@@ -17,7 +17,7 @@ Les inputs (demandes utilisateurs) sont à déposer dans le répertoire data/inp
   
 ## Livrables produits
 
-Le runner des Agents AI génère les fichiers suivants dans le dossier `outputs/` :
+Le runner des Agents AI génère les fichiers suivants dans le dossier `outputs/etape1/` :
 
 ```text
 01_reformulation_du_besoin.md

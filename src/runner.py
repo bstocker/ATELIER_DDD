@@ -13,6 +13,7 @@ CONFIG_DIR = BASE_DIR / "config"
 DATA_DIR = BASE_DIR / "data"
 INPUT_DIR = DATA_DIR / "input"
 OUTPUT_DIR = BASE_DIR / "outputs"
+STEP1_OUTPUT_DIR = OUTPUT_DIR / "etape1"
 
 
 def load_yaml(path: Path) -> Dict[str, Any]:
@@ -100,7 +101,28 @@ CONSIGNES GÉNÉRALES
 
 def ensure_project_structure() -> None:
     INPUT_DIR.mkdir(parents=True, exist_ok=True)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP1_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def resolve_step1_output_path(output_file: str, task_key: str) -> Path:
+    output_path = Path(output_file)
+
+    if output_path.is_absolute():
+        raise ValueError(
+            f"La tâche {task_key} utilise un chemin absolu interdit : {output_file}. "
+            "Utilise un chemin relatif du type outputs/etape1/nom_du_fichier.md"
+        )
+
+    if not output_path.parts:
+        raise ValueError(f"La tâche {task_key} utilise un chemin de sortie vide.")
+
+    if output_path.parts[0] == "outputs":
+        if len(output_path.parts) > 1 and output_path.parts[1] == "etape1":
+            return output_path
+
+        return Path("outputs") / "etape1" / Path(*output_path.parts[1:])
+
+    return Path("outputs") / "etape1" / output_path
 
 
 def build_agent(agents_config: Dict[str, Any], llm: LLM) -> Agent:
@@ -141,16 +163,7 @@ def build_tasks(
                 raise KeyError(f"Champ manquant dans la tâche {task_key} : {field}")
 
         output_file = task_config["output_file"]
-        output_path = Path(output_file)
-
-        if output_path.is_absolute():
-            raise ValueError(
-                f"La tâche {task_key} utilise un chemin absolu interdit : {output_file}. "
-                "Utilise un chemin relatif du type outputs/nom_du_fichier.md"
-            )
-
-        if output_path.parts[0] != "outputs":
-            output_path = Path("outputs") / output_path
+        output_path = resolve_step1_output_path(output_file, task_key)
 
         absolute_output_parent = BASE_DIR / output_path.parent
         absolute_output_parent.mkdir(parents=True, exist_ok=True)
@@ -209,15 +222,11 @@ def main() -> None:
 
     print("\nExécution terminée.")
     print(f"Sources analysées depuis : {INPUT_DIR.relative_to(BASE_DIR)}")
-    print(f"Livrables générés dans : {OUTPUT_DIR.relative_to(BASE_DIR)}")
+    print(f"Livrables générés dans : {STEP1_OUTPUT_DIR.relative_to(BASE_DIR)}")
 
     print("\nFichiers de sortie attendus :")
-    for task_config in tasks_config.values():
-        output_file = Path(task_config["output_file"])
-
-        if not output_file.is_absolute() and output_file.parts[0] != "outputs":
-            output_file = Path("outputs") / output_file
-
+    for task_key, task_config in tasks_config.items():
+        output_file = resolve_step1_output_path(task_config["output_file"], task_key)
         print(f"- {output_file}")
 
     print("\nRésultat global :")
