@@ -22,11 +22,13 @@ STEP2_OUTPUT_DIR = OUTPUT_DIR / "etape2"
 STEP3_OUTPUT_DIR = OUTPUT_DIR / "etape3"
 STEP4_OUTPUT_DIR = OUTPUT_DIR / "etape4"
 STEP5_OUTPUT_DIR = OUTPUT_DIR / "etape5"
+STEP6_OUTPUT_DIR = OUTPUT_DIR / "etape6"
 STEP1_LIVRABLES_DIR = LIVRABLES_DIR / "etape1"
 STEP2_LIVRABLES_DIR = LIVRABLES_DIR / "etape2"
 STEP3_LIVRABLES_DIR = LIVRABLES_DIR / "etape3"
 STEP4_LIVRABLES_DIR = LIVRABLES_DIR / "etape4"
 STEP5_LIVRABLES_DIR = LIVRABLES_DIR / "etape5"
+STEP6_LIVRABLES_DIR = LIVRABLES_DIR / "etape6"
 
 ALLOWED_INPUT_EXTENSIONS = {".md", ".txt", ".log", ".csv"}
 
@@ -154,6 +156,33 @@ STEP_CONFIGS: Dict[str, Dict[str, Any]] = {
             "Produire une réponse en français, structurée en Markdown.",
         ],
     },
+    "6": {
+        "label": "Étape 6",
+        "agent_key": "domain_model_architect",
+        "agents_file": CONFIG_DIR / "agents_step6.yaml",
+        "tasks_file": CONFIG_DIR / "tasks_step6.yaml",
+        "input_dirs": [STEP5_OUTPUT_DIR],
+        "output_dir": STEP6_OUTPUT_DIR,
+        "post_run_copies": [
+            {
+                "source": STEP6_OUTPUT_DIR / "06_diagramme_classes_uml.md",
+                "destination": STEP6_LIVRABLES_DIR / "Modele_Metier_UML_etape6.md",
+            }
+        ],
+        "instructions": [
+            "Rester strictement dans l'étape 6 : modélisation du domaine métier au sein des Bounded Contexts.",
+            "Utiliser les livrables de l'étape 5 comme corpus d'entrée principal.",
+            "Se concentrer en priorité sur les Bounded Contexts relevant du coeur stratégique.",
+            "Distinguer rigoureusement agrégats, entités et objets valeur selon leurs propriétés DDD.",
+            "Formaliser les invariants et règles métier directement associés à leur agrégat responsable.",
+            "Ne pas concevoir l'architecture technique, les bases de données, les APIs ou l'infrastructure.",
+            "Ne pas inventer d'information clinique absente du corpus.",
+            "Distinguer explicitement les faits, les hypothèses et les points à clarifier.",
+            "Nommer les événements de domaine au passé et les commandes à l'impératif.",
+            "Produire le diagramme UML final en syntaxe classDiagram Mermaid, sans texte avant ni après le bloc.",
+            "Produire une réponse en français, structurée en Markdown.",
+        ],
+    },
 }
 
 
@@ -179,6 +208,9 @@ def build_missing_input_hint(input_dir: Path) -> str:
 
     if input_dir == STEP4_OUTPUT_DIR:
         return "Exécute d'abord l'étape 4 : python src/runner.py --step 4"
+
+    if input_dir == STEP5_OUTPUT_DIR:
+        return "Exécute d'abord l'étape 5 : python src/runner.py --step 5"
 
     return f"Dépose au moins un fichier exploitable dans {input_dir.relative_to(BASE_DIR)}."
 
@@ -272,11 +304,13 @@ def ensure_project_structure() -> None:
     STEP3_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP5_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STEP6_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STEP1_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP2_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP3_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP4_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
     STEP5_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
+    STEP6_LIVRABLES_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def run_post_run_copies(step_config: Dict[str, Any]) -> List[Path]:

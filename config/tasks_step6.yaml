@@ -1,0 +1,108 @@
+identifier_agregats_entites:
+  description: >
+    À partir des Bounded Contexts, de leurs frontières de responsabilité et du
+    vocabulaire stabilisé issus de l'étape 5, identifier les agrégats et les
+    entités de chaque contexte. Un agrégat est une grappe d'objets traitée comme
+    une unité de cohérence avec une racine d'agrégat unique. Une entité est un
+    objet doté d'une identité propre et d'un cycle de vie au sein du domaine.
+    Se concentrer en priorité sur les contextes relevant du coeur stratégique.
+  expected_output: >
+    Un document Markdown intitulé "Agrégats et entités du domaine" contenant,
+    pour chaque Bounded Context :
+    - la liste des agrégats avec leur racine d'agrégat identifiée ;
+    - les entités appartenant à chaque agrégat ;
+    - les attributs principaux et l'identifiant métier de chaque entité ;
+    - le cycle de vie métier de l'agrégat (états possibles) ;
+    - la justification du périmètre de cohérence choisi ;
+    - les entités partagées ou ambiguës entre contextes à clarifier.
+  output_file: outputs/etape6/01_agregats_entites.md
+
+definir_objets_valeur:
+  description: >
+    Identifier les objets valeur du domaine au sein de chaque Bounded Context.
+    Un objet valeur n'a pas d'identité propre : il est défini uniquement par ses
+    attributs, est immuable et peut être remplacé par un autre objet valeur ayant
+    les mêmes attributs. Repérer les concepts du domaine qui satisfont ces
+    propriétés : résultats de mesure, plages de valeurs, contexte clinique,
+    coordonnées, périodes temporelles, etc.
+  expected_output: >
+    Un document Markdown intitulé "Objets valeur du domaine" contenant,
+    pour chaque Bounded Context :
+    - la liste des objets valeur identifiés ;
+    - leurs attributs constitutifs et leur type métier ;
+    - la règle d'égalité ou de comparaison métier ;
+    - l'agrégat ou l'entité qui les porte ;
+    - les contraintes de validité et les règles de construction ;
+    - les objets valeur partagés entre contextes et les risques d'ambiguïté.
+  output_file: outputs/etape6/02_objets_valeur.md
+
+modeliser_services_evenements_domaine:
+  description: >
+    Modéliser les services de domaine et les événements de domaine de chaque
+    Bounded Context. Un service de domaine porte une opération métier significative
+    qui n'appartient naturellement ni à une entité ni à un agrégat. Un événement
+    de domaine représente un fait métier passé, significatif et immuable, qui
+    indique qu'un changement d'état important s'est produit dans le domaine.
+  expected_output: >
+    Un document Markdown intitulé "Services et événements de domaine" contenant,
+    pour chaque Bounded Context :
+    - la liste des services de domaine avec leur responsabilité métier ;
+    - les entrées, sorties et règles métier portées par chaque service ;
+    - la liste des événements de domaine avec leur nom au passé ;
+    - les données portées par chaque événement ;
+    - l'agrégat ou le service qui publie chaque événement ;
+    - les contextes ou consommateurs qui réagissent à chaque événement ;
+    - les événements dont la définition reste à stabiliser avec les experts.
+  output_file: outputs/etape6/03_services_evenements_domaine.md
+
+formaliser_regles_invariants:
+  description: >
+    Formaliser les règles métier et les invariants de chaque agrégat identifié.
+    Un invariant est une règle de cohérence qui doit toujours être respectée à
+    l'intérieur d'un agrégat, quelle que soit l'opération effectuée. Traduire
+    les règles métier issues des étapes précédentes en contraintes précises,
+    vérifiables et directement associées à leur agrégat responsable.
+  expected_output: >
+    Un document Markdown intitulé "Règles métier et invariants des agrégats" contenant,
+    pour chaque agrégat :
+    - les invariants de cohérence à maintenir en toutes circonstances ;
+    - les règles métier de création, modification et clôture ;
+    - les préconditions à vérifier avant toute commande ou opération ;
+    - les postconditions attendues après exécution ;
+    - les règles issues du corpus métier et leur source ;
+    - les invariants encore incertains ou à valider avec les experts métier.
+  output_file: outputs/etape6/04_regles_invariants_agregats.md
+
+decrire_comportements_agregats:
+  description: >
+    Décrire les comportements attendus de chaque agrégat sous la forme de
+    commandes métier acceptées et de réponses produites. Une commande exprime
+    une intention de modifier l'état du domaine. Chaque commande doit être
+    associée à l'agrégat qui en est responsable, aux règles qu'elle applique,
+    aux événements qu'elle publie et aux effets qu'elle produit sur le domaine.
+  expected_output: >
+    Un document Markdown intitulé "Comportements et commandes des agrégats" contenant,
+    pour chaque agrégat :
+    - la liste des commandes métier acceptées avec leur nom explicite ;
+    - l'acteur ou le contexte émetteur de la commande ;
+    - les règles et invariants vérifiés lors du traitement ;
+    - les événements de domaine publiés en résultat ;
+    - les effets de bord métier sur d'autres agrégats ou contextes ;
+    - les cas d'échec ou de rejet métier possibles ;
+    - les comportements encore incertains à clarifier avec les experts.
+  output_file: outputs/etape6/05_comportements_commandes_agregats.md
+
+produire_diagramme_classes_uml:
+  description: >
+    Produire le diagramme de classes UML de synthèse du modèle métier en utilisant
+    la syntaxe classDiagram de Mermaid. Le diagramme doit représenter l'ensemble
+    des agrégats, entités et objets valeur des Bounded Contexts du coeur stratégique,
+    avec leurs attributs principaux, leurs méthodes métier significatives et leurs
+    relations. Utiliser des stéréotypes pour distinguer les racines d'agrégat
+    (<<AggregateRoot>>), les entités (<<Entity>>) et les objets valeur (<<ValueObject>>).
+    Ce livrable est le livrable le plus important de l'étape 6.
+  expected_output: >
+    Un fichier Markdown contenant uniquement un bloc ```mermaid avec un classDiagram
+    de synthèse du modèle métier. Le fichier ne doit contenir rien d'autre avant
+    ou après ce bloc mermaid.
+  output_file: outputs/etape6/06_diagramme_classes_uml.md
